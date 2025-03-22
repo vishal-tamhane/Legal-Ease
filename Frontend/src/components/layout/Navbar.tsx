@@ -42,13 +42,12 @@ export function Navbar() {
           : "py-4 bg-transparent"
       }`}
     >
-      <div className="container mx-auto px-4 flex items-center justify-between">
+      <div className="container mx-auto px-6 flex items-center justify-between">
         <Link
           to="/"
           className="text-2xl font-bold tracking-tight flex items-center space-x-2"
         >
-          <span className="text-primary">Legal</span>
-          <span className="text-justice-800 dark:text-white">Ease</span>
+          <span className="text-justice-800 dark:text-white">Legal Ease</span>
         </Link>
         
         {/* Desktop Navigation */}

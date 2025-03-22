@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { 
@@ -122,9 +121,6 @@ export function CaseList() {
           />
         </div>
         <div className="flex items-center gap-2 w-full md:w-auto">
-          <Button variant="outline" size="sm" className="flex items-center gap-2">
-            <Filter className="h-4 w-4" /> Filter
-          </Button>
           <Button size="sm" className="flex items-center gap-2">
             <FileText className="h-4 w-4" /> New Case
           </Button>
