@@ -98,7 +98,7 @@ export function ChatPage() {
   return (
     <div className="flex flex-col min-h-screen bg-gray-50 dark:bg-gray-900">
       <Navbar />
-      <main className="flex mt-24 justify-center px-4 sm:px-6 py-6 lg:px-8 ">
+      <main className="flex my-20 justify-center px-4 sm:px-6 py-6 lg:px-8 ">
         <div className="w-full max-w-4xl ">
           <div className="mb-8 text-center">
             <h1 className="text-3xl font-bold mb-2">Legal Assistant Chat</h1>
@@ -107,10 +107,10 @@ export function ChatPage() {
             </p>
           </div>
 
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl h-[600px] flex flex-col border border-white">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-2xl h-[600px] flex flex-col border border-white ">
             <div className="flex-1 overflow-y-auto p-4 space-y-4">
 
-              <h1 className="text-6xl max-sm:text-4xl font-bold text-gray-600 text-center  py-12">Legal AI</h1>
+              <h1 className="text-6xl max-sm:text-4xl font-bold text-gray-400 dark:text-gray-600 text-center  py-12">Legal AI</h1>
 
 
               {messages.slice(1).map((message, index) => (
