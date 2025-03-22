@@ -14,6 +14,7 @@ import Auth from "./pages/Auth";
 import { ChatPage } from "./pages/ChatPage";
 import Efilling from "./components/EfillingBlocks/Efilling";
 import { FloatingChatButton } from "@/components/FloatingChatButton";
+import MeetingBuilder from "./components/meeting/MeetingBuilder";
 
 const queryClient = new QueryClient();
 
@@ -34,6 +35,7 @@ const App = () => (
               <Route path="/filecase" element={<Efilling />} />
               <Route path="/chat" element={<ChatPage />} />
               <Route path="/legal-ai" element={<ChatPage />} />
+              <Route path="/meeting" element={<MeetingBuilder />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
