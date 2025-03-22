@@ -12,6 +12,8 @@ import Cases from "./pages/Cases";
 import CaseView from "./pages/CaseView";
 import Auth from "./pages/Auth";
 import { ChatPage } from "./pages/ChatPage";
+import Efilling from "./components/EfillingBlocks/Efilling";
+import { FloatingChatButton } from "@/components/FloatingChatButton";
 import LawyerDashboard from "@/components/Dashboard/LawyerDashboard"; // ✅ Default export
 
 
@@ -36,15 +38,12 @@ const App = () => (
               <Route path="/cases" element={<Cases />} />
               <Route path="/cases/:id" element={<CaseView />} />
               <Route path="/auth" element={<Auth />} />
+              <Route path="/filecase" element={<Efilling />} />
               <Route path="/chat" element={<ChatPage />} />
-              <Route path="/dashboard/lawyerDashboard" element={<LawyerDashboard />} />
-              <Route path="/dashboard/judgeDashboard" element={<JudgeDashboard />} />
-              <Route path="/dashboard/litigantDashboard" element={<LitigantDashboard />} />
-               <Route path="/dashboard/adminDashboard" element={<AdminDashboard />} />
-
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
+            <FloatingChatButton />
           </BrowserRouter>
         </TooltipProvider>
       </AuthProvider>
