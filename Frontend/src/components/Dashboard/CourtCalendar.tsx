@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
+import { CaseStatusTracker } from './CaseStatusTracker';
 
 interface Event {
   id?: string;
@@ -29,6 +30,7 @@ interface Event {
   status?: 'scheduled' | 'completed' | 'cancelled';
   color?: string;
   display?: 'block' | 'background';
+  currentStage?: string;
 }
 
 // Supreme Court Holidays 2025
@@ -216,7 +218,7 @@ export function CourtCalendar() {
 
       {/* Event Details Modal */}
       <Dialog open={isEventModalOpen} onOpenChange={setIsEventModalOpen}>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="sm:max-w-[600px] max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>{selectedEvent?.title}</DialogTitle>
             <DialogDescription>
@@ -239,6 +241,16 @@ export function CourtCalendar() {
                 <p><strong>Time:</strong> {selectedEvent.start.toLocaleTimeString()} - {selectedEvent.end?.toString()}</p>
               )}
             </div>
+
+            {/* Add Case Status Tracker if it's a case event */}
+            {selectedEvent?.caseNumber && (
+              <div className="border-t pt-4">
+                <CaseStatusTracker 
+                  caseNumber={selectedEvent.caseNumber}
+                  currentStage={selectedEvent.currentStage || 'Filing'}
+                />
+              </div>
+            )}
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setIsEventModalOpen(false)}>Close</Button>
