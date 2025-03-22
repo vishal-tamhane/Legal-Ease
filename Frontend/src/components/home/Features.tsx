@@ -62,10 +62,10 @@ export function Features() {
   };
 
   return (
-    <section className="py-20 bg-gradient-to-b from-secondary/20 to-transparent relative overflow-hidden">
+    <section className="py-20 relative overflow-hidden">
       {/* Animated background elements */}
       <div className="absolute inset-0 opacity-5 pointer-events-none">
-        <div className="absolute -top-20 -left-20 w-96 h-96 bg-primary rounded-full blur-3xl animate-float" />
+        <div className="absolute -top-20 -left-20 w-96 h-96 rounded-full blur-3xl animate-float" />
         <div className="absolute -bottom-20 -right-20 w-96 h-96 bg-secondary rounded-full blur-3xl animate-float-delayed" />
       </div>
 
