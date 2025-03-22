@@ -13,6 +13,7 @@ import CaseView from "./pages/CaseView";
 import Auth from "./pages/Auth";
 import { ChatPage } from "./pages/ChatPage";
 import Efilling from "./components/EfillingBlocks/Efilling";
+import { FloatingChatButton } from "@/components/FloatingChatButton";
 
 const queryClient = new QueryClient();
 
@@ -32,9 +33,11 @@ const App = () => (
               <Route path="/auth" element={<Auth />} />
               <Route path="/filecase" element={<Efilling />} />
               <Route path="/chat" element={<ChatPage />} />
+              <Route path="/legal-ai" element={<ChatPage />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
+            <FloatingChatButton />
           </BrowserRouter>
         </TooltipProvider>
       </AuthProvider>
