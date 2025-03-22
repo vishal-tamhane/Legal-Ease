@@ -11,7 +11,7 @@ import {
 } from "firebase/firestore"; // ✅ Import Firestore functions
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAbAj1UgMo4M7sQVCU9i9-B-5aaBnv4GU0",
+  apiKey: "AIzaSyAbAj1UgMo4M7sQVCU9i9-B-5aaBnv4GU0",
   authDomain: "we-hack-project.firebaseapp.com",
   projectId: "we-hack-project",
   storageBucket: "we-hack-project.firebasestorage.app",

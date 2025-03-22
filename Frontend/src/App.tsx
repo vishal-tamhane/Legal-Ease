@@ -12,13 +12,10 @@ import Cases from "./pages/Cases";
 import CaseView from "./pages/CaseView";
 import Auth from "./pages/Auth";
 import { ChatPage } from "./pages/ChatPage";
-import LawyerDashboard from "@/components/Dashboard/LawyerDashboard"; // Updated path
-import {JudgeDashboard} from "./components/Dashboard/JudgeDashboard";
-// import LawyerDashboard from "./components/LawyerDashboard";
-import {LitigantDashboard} from "./components/Dashboard/LitigantDashboard";
-import {AdminDashboard }from "./components/Dashboard/AdminDashboard";
-import Efilling from "./components/EfillingBlocks/Efilling";
-import { FloatingChatButton } from "@/components/FloatingChatButton";
+import LawyerDashboard from "@/components/Dashboard/LawyerDashboard";
+import { JudgeDashboard } from "./components/Dashboard/JudgeDashboard";
+import { LitigantDashboard } from "./components/Dashboard/LitigantDashboard";
+import { AdminDashboard } from "./components/Dashboard/AdminDashboard";
 import MeetingBuilder from "./components/meeting/MeetingBuilder";
 
 const queryClient = new QueryClient();
@@ -33,19 +30,18 @@ const App = () => (
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Index />} />
+              <Route path="/auth" element={<Auth />} />
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/dashboard/lawyer" element={<LawyerDashboard />} />
+              <Route path="/dashboard/judge" element={<JudgeDashboard />} />
+              <Route path="/dashboard/litigant" element={<LitigantDashboard />} />
+              <Route path="/dashboard/admin" element={<AdminDashboard />} />
+
               <Route path="/cases" element={<Cases />} />
               <Route path="/cases/:id" element={<CaseView />} />
-              <Route path="/auth" element={<Auth />} />
               <Route path="/chat" element={<ChatPage />} />
-              <Route path="/dashboard/lawyer:" element={<LawyerDashboard />} />
-              <Route path="/dashboard/judge:" element={<JudgeDashboard />} />
-              <Route path="/dashboard/litigant:" element={<LitigantDashboard />} />
-               <Route path="/dashboard/admin:" element={<AdminDashboard />} />
-
-              <Route path="/legal-ai" element={<ChatPage />} />
               <Route path="/meeting" element={<MeetingBuilder />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              {/* Catch-all route for 404 page */}
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>

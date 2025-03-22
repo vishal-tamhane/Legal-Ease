@@ -19,7 +19,6 @@ export function AuthForm() {
   const navigate = useNavigate();
   const { login } = useAuth();
 
-  // Handle Signup
   const handleSignupSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!role) {
@@ -32,17 +31,14 @@ export function AuthForm() {
       const userCredential = await registerUser(email, password);
       const user = userCredential.user;
 
-      // Store user details in Firestore
       await setDoc(doc(db, "users", user.uid), {
         fullName,
         email,
-        role, // Store the selected role
+        role,
       });
 
       login({ id: user.uid, email, role });
-
-      // Redirect to dashboard
-      navigate(`/dashboard/${role}Dashboard`);
+      navigate(`/dashboard/${role}`);
       toast.success("Account created successfully");
     } catch (error) {
       toast.error("Signup failed: " + error.message);
@@ -51,13 +47,11 @@ export function AuthForm() {
     }
   };
 
-  // Fetch user role from Firestore
   const getUserRole = async (uid: string) => {
     const userDoc = await getDoc(doc(db, "users", uid));
-    return userDoc.exists() ? userDoc.data().role : null; // Get role
+    return userDoc.exists() ? userDoc.data().role : null;
   };
 
-  // Handle Login
   const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
@@ -66,18 +60,14 @@ export function AuthForm() {
       const userCredential = await loginUser(email, password);
       const user = userCredential.user;
 
-      // Fetch role from Firestore
       const userRole = await getUserRole(user.uid);
-
       if (!userRole) {
         toast.error("Role not found, please contact support.");
         return;
       }
 
       login({ id: user.uid, email, role: userRole });
-
-      // Redirect to correct dashboard
-      navigate(`/dashboard/${userRole}Dashboard`);
+      navigate(`/dashboard/${userRole}`);
       toast.success("Successfully logged in");
     } catch (error) {
       toast.error("Login failed: " + error.message);
@@ -93,8 +83,7 @@ export function AuthForm() {
           <TabsTrigger value="login">Login</TabsTrigger>
           <TabsTrigger value="signup">Signup</TabsTrigger>
         </TabsList>
-        
-        {/* Login Form */}
+
         <TabsContent value="login" className="space-y-4 py-3">
           <form onSubmit={handleLoginSubmit} className="space-y-4">
             <div className="space-y-2">
@@ -110,8 +99,7 @@ export function AuthForm() {
             </Button>
           </form>
         </TabsContent>
-        
-        {/* Signup Form */}
+
         <TabsContent value="signup" className="space-y-4">
           <form onSubmit={handleSignupSubmit} className="space-y-4">
             <div className="space-y-2">
