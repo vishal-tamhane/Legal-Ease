@@ -11,17 +11,17 @@ const Dashboard = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
-      <main className="flex-grow mt-24">
+      <main className="flex-grow mt-20">
         <div className="page-container">
           <div className="mb-8">
-            <h1 className="heading-lg mb-2">
+            <h1 className="heading-lg">
               {user ? `${capitalize(user.role)} Dashboard` : 'Dashboard'}
             </h1>
-            <p className="text-muted-foreground">
+            {/* <p className="text-muted-foreground">
               {user 
                 ? `Welcome back, ${user.name}. View your case statistics and recent activity.` 
                 : 'Please log in to view your dashboard'}
-            </p>
+            </p> */}
           </div>
           <DashboardComponent />
         </div>

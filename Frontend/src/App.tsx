@@ -17,6 +17,12 @@ import { JudgeDashboard } from "./components/Dashboard/JudgeDashboard";
 import { LitigantDashboard } from "./components/Dashboard/LitigantDashboard";
 import { AdminDashboard } from "./components/Dashboard/AdminDashboard";
 import MeetingBuilder from "./components/meeting/MeetingBuilder";
+import {LawyerDashboard} from "@/components/Dashboard/LawyerDashboard";
+import { JudgeDashboard } from "./components/Dashboard/JudgeDashboard";
+import { LitigantDashboard } from "./components/Dashboard/LitigantDashboard";
+import { AdminDashboard } from "./components/Dashboard/AdminDashboard";
+import { Navbar } from "./components/layout/Navbar";
+import { Footer } from "./components/layout/Footer";
 
 const queryClient = new QueryClient();
 
@@ -41,7 +47,12 @@ const App = () => (
               <Route path="/cases/:id" element={<CaseView />} />
               <Route path="/chat" element={<ChatPage />} />
               <Route path="/meeting" element={<MeetingBuilder />} />
-              {/* Catch-all route for 404 page */}
+              <Route path="/dashboard/lawyerDashboard" element={<LawyerDashboard />} />
+              <Route path="/dashboard/judgeDashboard" element={<JudgeDashboard />} />
+              <Route path="/dashboard/litigantDashboard" element={<LitigantDashboard />} />
+              <Route path="/dashboard/adminDashboard" element={<AdminDashboard />} />
+
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>

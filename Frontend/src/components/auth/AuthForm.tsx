@@ -7,18 +7,36 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 import { useAuth } from "@/context/AuthContext";
-import { registerUser, loginUser, db } from "@/firebase";
-import { setDoc, doc, getDoc } from "firebase/firestore";
+import { auth } from "@/services/api";
 
 export function AuthForm() {
   const [isLoading, setIsLoading] = useState(false);
-  const [role, setRole] = useState(""); // User role
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [fullName, setFullName] = useState("");
+  const [role, setRole] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [fullName, setFullName] = useState('');
   const navigate = useNavigate();
   const { login } = useAuth();
 
+  // Login form submission
+  const handleLoginSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    
+    try {
+      const { token, user } = await auth.login(email, password);
+      localStorage.setItem('token', token);
+      login(user);
+      toast.success("Successfully logged in");
+      navigate("/dashboard");
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || "Login failed");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Signup form submission
   const handleSignupSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!role) {
@@ -26,51 +44,21 @@ export function AuthForm() {
       return;
     }
     setIsLoading(true);
-
+    
     try {
-      const userCredential = await registerUser(email, password);
-      const user = userCredential.user;
-
-      await setDoc(doc(db, "users", user.uid), {
-        fullName,
+      const { token, user } = await auth.register({
         email,
-        role,
+        password,
+        fullName,
+        role
       });
-
-      login({ id: user.uid, email, role });
-      navigate(`/dashboard/${role}`);
+      
+      localStorage.setItem('token', token);
+      login(user);
       toast.success("Account created successfully");
-    } catch (error) {
-      toast.error("Signup failed: " + error.message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const getUserRole = async (uid: string) => {
-    const userDoc = await getDoc(doc(db, "users", uid));
-    return userDoc.exists() ? userDoc.data().role : null;
-  };
-
-  const handleLoginSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-
-    try {
-      const userCredential = await loginUser(email, password);
-      const user = userCredential.user;
-
-      const userRole = await getUserRole(user.uid);
-      if (!userRole) {
-        toast.error("Role not found, please contact support.");
-        return;
-      }
-
-      login({ id: user.uid, email, role: userRole });
-      navigate(`/dashboard/${userRole}`);
-      toast.success("Successfully logged in");
-    } catch (error) {
-      toast.error("Login failed: " + error.message);
+      navigate("/dashboard");
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || "Registration failed");
     } finally {
       setIsLoading(false);
     }
@@ -88,11 +76,35 @@ export function AuthForm() {
           <form onSubmit={handleLoginSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+              <Input
+                id="email"
+                placeholder="name@example.com"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="transition-all duration-300"
+              />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+              <div className="flex items-center justify-between">
+                <Label htmlFor="password">Password</Label>
+                <a 
+                  href="#" 
+                  className="text-sm text-primary hover:underline"
+                  onClick={(e) => e.preventDefault()}
+                >
+                  Forgot password?
+                </a>
+              </div>
+              <Input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                className="transition-all duration-300"
+              />
             </div>
             <Button type="submit" className="w-full" disabled={isLoading}>
               {isLoading ? "Logging in..." : "Login"}
@@ -104,19 +116,42 @@ export function AuthForm() {
           <form onSubmit={handleSignupSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="signup-fullname">Full Name</Label>
-              <Input id="signup-fullname" type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} required />
+              <Input
+                id="signup-fullname"
+                placeholder="John Doe"
+                type="text"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                required
+                className="transition-all duration-300"
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="signup-email">Email</Label>
-              <Input id="signup-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+              <Input
+                id="signup-email"
+                placeholder="name@example.com"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="transition-all duration-300"
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="signup-password">Password</Label>
-              <Input id="signup-password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+              <Input
+                id="signup-password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                className="transition-all duration-300"
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="role">Role</Label>
-              <Select value={role} onValueChange={(value) => setRole(value)}>
+              <Select value={role} onValueChange={setRole}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select a role" />
                 </SelectTrigger>
