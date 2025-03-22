@@ -1,14 +1,14 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { Button } from "@/components/ui/button";
-import { Menu, X, FileText, Calendar, User, Home } from "lucide-react";
+import { Menu, X, FileText, Calendar, User, Home, MessageCircle } from "lucide-react";
 
 const links = [
   { name: "Home", href: "/", icon: Home },
   { name: "Dashboard", href: "/dashboard", icon: FileText },
   { name: "Cases", href: "/cases", icon: Calendar },
+  { name: "LegalAI", href: "/chat", icon: MessageCircle },
 ];
 
 export function Navbar() {
