@@ -5,13 +5,13 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { AuthProvider } from "@/context/AuthContext";
-import { ChatBot } from "@/components/ChatBot";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Dashboard from "./pages/Dashboard";
 import Cases from "./pages/Cases";
 import CaseView from "./pages/CaseView";
 import Auth from "./pages/Auth";
+import { ChatPage } from "./pages/ChatPage";
 
 const queryClient = new QueryClient();
 
@@ -22,7 +22,6 @@ const App = () => (
         <TooltipProvider>
           <Toaster />
           <Sonner />
-          <ChatBot />
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Index />} />
@@ -30,6 +29,7 @@ const App = () => (
               <Route path="/cases" element={<Cases />} />
               <Route path="/cases/:id" element={<CaseView />} />
               <Route path="/auth" element={<Auth />} />
+              <Route path="/chat" element={<ChatPage />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
