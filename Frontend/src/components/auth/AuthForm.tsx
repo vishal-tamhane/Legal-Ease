@@ -1,120 +1,109 @@
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { 
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue 
-} from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 import { useAuth } from "@/context/AuthContext";
-import { UserRole } from "@/types/user";
+import { registerUser, loginUser, db } from "@/firebase";
+import { setDoc, doc, getDoc } from "firebase/firestore";
 
 export function AuthForm() {
   const [isLoading, setIsLoading] = useState(false);
-  const [role, setRole] = useState<UserRole | ''>('');
-  const [email, setEmail] = useState('');
-  const [fullName, setFullName] = useState('');
+  const [role, setRole] = useState(""); // User role
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState("");
   const navigate = useNavigate();
   const { login } = useAuth();
 
-  // Login form submission
-  const handleLoginSubmit = (e: React.FormEvent) => {
+  // Handle Signup
+  const handleSignupSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
-    
-    // Simulate login (in a real app, you would verify credentials)
-    setTimeout(() => {
-      // Simulate getting user data from API
-      const loginEmail = (e.target as HTMLFormElement).elements.namedItem('email') as HTMLInputElement;
-      
-      const mockUser = {
-        id: '123',
-        name: 'Test User',
-        email: loginEmail.value,
-        role: 'judge' as UserRole, // In a real app, this would come from the backend
-      };
-      
-      login(mockUser);
-      setIsLoading(false);
-      toast.success("Successfully logged in");
-      navigate("/dashboard");
-    }, 1500);
-  };
-
-  // Signup form submission
-  const handleSignupSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
     if (!role) {
       toast.error("Please select a role");
       return;
     }
-    
     setIsLoading(true);
-    
-    // Simulate signup (in a real app, you would create a new user)
-    setTimeout(() => {
-      // Create a new user with the form data
-      const newUser = {
-        id: Math.random().toString(36).substring(2, 9),
-        name: fullName,
-        email: email,
-        role: role,
-      };
-      
-      login(newUser);
-      setIsLoading(false);
+
+    try {
+      const userCredential = await registerUser(email, password);
+      const user = userCredential.user;
+
+      // Store user details in Firestore
+      await setDoc(doc(db, "users", user.uid), {
+        fullName,
+        email,
+        role, // Store the selected role
+      });
+
+      login({ id: user.uid, email, role });
+
+      // Redirect to dashboard
+      navigate(`/dashboard/${role}`);
       toast.success("Account created successfully");
-      navigate("/dashboard");
-    }, 1500);
+    } catch (error) {
+      toast.error("Signup failed: " + error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Fetch user role from Firestore
+  const getUserRole = async (uid: string) => {
+    const userDoc = await getDoc(doc(db, "users", uid));
+    return userDoc.exists() ? userDoc.data().role : null; // Get role
+  };
+
+  // Handle Login
+  const handleLoginSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    try {
+      const userCredential = await loginUser(email, password);
+      const user = userCredential.user;
+
+      // Fetch role from Firestore
+      const userRole = await getUserRole(user.uid);
+
+      if (!userRole) {
+        toast.error("Role not found, please contact support.");
+        return;
+      }
+
+      login({ id: user.uid, email, role: userRole });
+
+      // Redirect to correct dashboard
+      navigate(`/dashboard/${userRole}`);
+      toast.success("Successfully logged in");
+    } catch (error) {
+      toast.error("Login failed: " + error.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
-    <div className="w-full max-w-md mx-auto ">
+    <div className="w-full max-w-md mx-auto">
       <Tabs defaultValue="login" className="w-full">
         <TabsList className="grid w-full grid-cols-2 mb-8">
           <TabsTrigger value="login">Login</TabsTrigger>
           <TabsTrigger value="signup">Signup</TabsTrigger>
         </TabsList>
         
+        {/* Login Form */}
         <TabsContent value="login" className="space-y-4 py-3">
           <form onSubmit={handleLoginSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                placeholder="name@example.com"
-                type="email"
-                autoComplete="email"
-                required
-                className="transition-all duration-300"
-              />
+              <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
             </div>
             <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <Label htmlFor="password">Password</Label>
-                <a 
-                  href="#" 
-                  className="text-sm text-primary hover:underline"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Forgot password?
-                </a>
-              </div>
-              <Input
-                id="password"
-                type="password"
-                autoComplete="current-password"
-                required
-                className="transition-all duration-300"
-              />
+              <Label htmlFor="password">Password</Label>
+              <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
             </div>
             <Button type="submit" className="w-full" disabled={isLoading}>
               {isLoading ? "Logging in..." : "Login"}
@@ -122,46 +111,24 @@ export function AuthForm() {
           </form>
         </TabsContent>
         
+        {/* Signup Form */}
         <TabsContent value="signup" className="space-y-4">
           <form onSubmit={handleSignupSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="signup-fullname">Full Name</Label>
-              <Input
-                id="signup-fullname"
-                placeholder="John Doe"
-                type="text"
-                required
-                className="transition-all duration-300"
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-              />
+              <Input id="signup-fullname" type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} required />
             </div>
             <div className="space-y-2">
               <Label htmlFor="signup-email">Email</Label>
-              <Input
-                id="signup-email"
-                placeholder="name@example.com"
-                type="email"
-                autoComplete="email"
-                required
-                className="transition-all duration-300"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
+              <Input id="signup-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
             </div>
             <div className="space-y-2">
               <Label htmlFor="signup-password">Password</Label>
-              <Input
-                id="signup-password"
-                type="password"
-                autoComplete="new-password"
-                required
-                className="transition-all duration-300"
-              />
+              <Input id="signup-password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
             </div>
             <div className="space-y-2">
               <Label htmlFor="role">Role</Label>
-              <Select value={role} onValueChange={(value) => setRole(value as UserRole)}>
+              <Select value={role} onValueChange={(value) => setRole(value)}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select a role" />
                 </SelectTrigger>
