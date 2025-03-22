@@ -62,7 +62,7 @@ export function Hero() {
               <Link to="/auth">Get Started <ArrowRight className="ml-2 h-4 w-4" /></Link>
             </Button>
             <Button variant="outline" size="lg" className="w-full sm:w-auto rounded-full">
-              <Link to="/dashboard">View Demo</Link>
+              <Link to="/dashboard">Dashboard</Link>
             </Button>
           </div>
         </div>
