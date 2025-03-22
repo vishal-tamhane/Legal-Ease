@@ -12,6 +12,7 @@ import Cases from "./pages/Cases";
 import CaseView from "./pages/CaseView";
 import Auth from "./pages/Auth";
 import { ChatPage } from "./pages/ChatPage";
+import Efilling from "./components/EfillingBlocks/Efilling";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,7 @@ const App = () => (
               <Route path="/cases" element={<Cases />} />
               <Route path="/cases/:id" element={<CaseView />} />
               <Route path="/auth" element={<Auth />} />
+              <Route path="/filecase" element={<Efilling />} />
               <Route path="/chat" element={<ChatPage />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
