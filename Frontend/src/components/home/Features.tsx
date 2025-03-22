@@ -6,6 +6,7 @@ interface Feature {
   icon: IconType;
   title: string;
   description: string;
+  link?: string;
 }
 
 const features: Feature[] = [
@@ -23,6 +24,7 @@ const features: Feature[] = [
     icon: MessageSquare,
     title: "Dispute Resolution",
     description: "Virtual mediation with AI-assisted tools.",
+    link: "https://presolv360.com/"
   },
   {
     icon: Calendar,
@@ -53,6 +55,12 @@ export function Features() {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
+  const handleFeatureClick = (link?: string) => {
+    if (link) {
+      window.open(link, '_blank');
+    }
+  };
+
   return (
     <section className="py-20 bg-gradient-to-b from-secondary/20 to-transparent relative overflow-hidden">
       {/* Animated background elements */}
@@ -76,6 +84,8 @@ export function Features() {
             <div 
               key={index}
               className="group perspective-1200 h-full"
+              onClick={() => handleFeatureClick(feature.link)}
+              style={{ cursor: feature.link ? 'pointer' : 'default' }}
             >
               <div 
                 className="relative h-full p-8 bg-background rounded-xl shadow-2xl transition-all duration-500 transform-gpu 
