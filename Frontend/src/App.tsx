@@ -31,6 +31,7 @@ const App = () => (
               <Route path="/cases/:id" element={<CaseView />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/filecase" element={<Efilling />} />
+              <Route path="/chat" element={<ChatPage />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
