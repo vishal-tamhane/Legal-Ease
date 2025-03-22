@@ -76,7 +76,7 @@ export function ChatPage() {
       }
 
       const data: GroqResponse = await response.json();
-      
+
       if (!data.choices?.[0]?.message?.content) {
         throw new Error('Invalid response format from API');
       }
@@ -96,32 +96,34 @@ export function ChatPage() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-gray-50 dark:bg-gray-900">
       <Navbar />
-      <main className="flex-grow mt-24">
-        <div className="page-container">
-          <div className="mb-8">
-            <h1 className="heading-lg mb-2">Legal Assistant Chat</h1>
-            <p className="text-muted-foreground">
+      <main className="flex mt-24 justify-center px-4 sm:px-6 py-6 lg:px-8 ">
+        <div className="w-full max-w-4xl ">
+          <div className="mb-8 text-center">
+            <h1 className="text-3xl font-bold mb-2">Legal Assistant Chat</h1>
+            <p className="text-gray-600 dark:text-gray-300">
               Ask your legal questions and get instant assistance from our AI legal assistant.
             </p>
           </div>
-          
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl h-[600px] flex flex-col">
+
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl h-[600px] flex flex-col border border-white">
             <div className="flex-1 overflow-y-auto p-4 space-y-4">
+
+              <h1 className="text-6xl max-sm:text-4xl font-bold text-gray-600 text-center  py-12">Legal AI</h1>
+
+
               {messages.slice(1).map((message, index) => (
                 <div
                   key={index}
-                  className={`flex ${
-                    message.role === 'user' ? 'justify-end' : 'justify-start'
-                  }`}
+                  className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'
+                    }`}
                 >
                   <div
-                    className={`max-w-[80%] p-3 rounded-lg ${
-                      message.role === 'user'
-                        ? 'bg-blue-500 text-white'
-                        : 'bg-gray-100 dark:bg-gray-700'
-                    }`}
+                    className={`max-w-[80%] p-3 rounded-lg ${message.role === 'user'
+                      ? 'bg-blue-500 text-white'
+                      : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100'
+                      }`}
                   >
                     {message.content}
                   </div>

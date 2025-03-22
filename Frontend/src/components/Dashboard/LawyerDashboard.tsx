@@ -29,14 +29,6 @@ export function LawyerDashboard() {
       icon: Clock,
       description: "Awaiting submission",
     },
-    {
-      title: "Client Messages",
-      value: "15",
-      change: "+5",
-      trend: "up",
-      icon: MessageSquare,
-      description: "Unread messages",
-    },
   ];
 
   const caseDeadlines = [
