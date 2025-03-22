@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -14,42 +13,37 @@ import {
 } from "@/components/ui/select";
 import { toast } from "sonner";
 import { useAuth } from "@/context/AuthContext";
-import { UserRole } from "@/types/user";
+import { auth } from "@/services/api";
 
 export function AuthForm() {
   const [isLoading, setIsLoading] = useState(false);
-  const [role, setRole] = useState<UserRole | ''>('');
+  const [role, setRole] = useState('');
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [fullName, setFullName] = useState('');
   const navigate = useNavigate();
   const { login } = useAuth();
 
   // Login form submission
-  const handleLoginSubmit = (e: React.FormEvent) => {
+  const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     
-    // Simulate login (in a real app, you would verify credentials)
-    setTimeout(() => {
-      // Simulate getting user data from API
-      const loginEmail = (e.target as HTMLFormElement).elements.namedItem('email') as HTMLInputElement;
-      
-      const mockUser = {
-        id: '123',
-        name: 'Test User',
-        email: loginEmail.value,
-        role: 'judge' as UserRole, // In a real app, this would come from the backend
-      };
-      
-      login(mockUser);
-      setIsLoading(false);
+    try {
+      const { token, user } = await auth.login(email, password);
+      localStorage.setItem('token', token);
+      login(user);
       toast.success("Successfully logged in");
       navigate("/dashboard");
-    }, 1500);
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || "Login failed");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   // Signup form submission
-  const handleSignupSubmit = (e: React.FormEvent) => {
+  const handleSignupSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!role) {
@@ -59,25 +53,27 @@ export function AuthForm() {
     
     setIsLoading(true);
     
-    // Simulate signup (in a real app, you would create a new user)
-    setTimeout(() => {
-      // Create a new user with the form data
-      const newUser = {
-        id: Math.random().toString(36).substring(2, 9),
-        name: fullName,
-        email: email,
-        role: role,
-      };
+    try {
+      const { token, user } = await auth.register({
+        email,
+        password,
+        fullName,
+        role
+      });
       
-      login(newUser);
-      setIsLoading(false);
+      localStorage.setItem('token', token);
+      login(user);
       toast.success("Account created successfully");
       navigate("/dashboard");
-    }, 1500);
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || "Registration failed");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
-    <div className="w-full max-w-md mx-auto ">
+    <div className="w-full max-w-md mx-auto">
       <Tabs defaultValue="login" className="w-full">
         <TabsList className="grid w-full grid-cols-2 mb-8">
           <TabsTrigger value="login">Login</TabsTrigger>
@@ -92,7 +88,8 @@ export function AuthForm() {
                 id="email"
                 placeholder="name@example.com"
                 type="email"
-                autoComplete="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
                 className="transition-all duration-300"
               />
@@ -111,7 +108,8 @@ export function AuthForm() {
               <Input
                 id="password"
                 type="password"
-                autoComplete="current-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
                 className="transition-all duration-300"
               />
@@ -130,10 +128,10 @@ export function AuthForm() {
                 id="signup-fullname"
                 placeholder="John Doe"
                 type="text"
-                required
-                className="transition-all duration-300"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
+                required
+                className="transition-all duration-300"
               />
             </div>
             <div className="space-y-2">
@@ -142,11 +140,10 @@ export function AuthForm() {
                 id="signup-email"
                 placeholder="name@example.com"
                 type="email"
-                autoComplete="email"
-                required
-                className="transition-all duration-300"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                required
+                className="transition-all duration-300"
               />
             </div>
             <div className="space-y-2">
@@ -154,14 +151,15 @@ export function AuthForm() {
               <Input
                 id="signup-password"
                 type="password"
-                autoComplete="new-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
                 className="transition-all duration-300"
               />
             </div>
             <div className="space-y-2">
               <Label htmlFor="role">Role</Label>
-              <Select value={role} onValueChange={(value) => setRole(value as UserRole)}>
+              <Select value={role} onValueChange={setRole}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select a role" />
                 </SelectTrigger>
