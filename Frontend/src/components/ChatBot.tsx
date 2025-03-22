@@ -55,7 +55,7 @@ export function ChatBot() {
       const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
         method: 'POST',
         headers: {
-          'Authorization': 'Bearer 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',
+          'Authorization': `Bearer ${import.meta.env.VITE_GROQ_API_KEY}`,
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         },
