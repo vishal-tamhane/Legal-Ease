@@ -14,6 +14,9 @@
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
+    "@firebase/auth": "^1.9.1",
+    "@firebase/firestore": "^4.7.10",
+    "@firebase/storage": "^0.13.7",
     "@hookform/resolvers": "^3.9.0",
     "@mui/material": "^6.4.8",
     "@radix-ui/react-accordion": "^1.2.0",
@@ -69,7 +72,12 @@
     "tailwindcss-animate": "^1.0.7",
     "uuid": "^11.1.0",
     "vaul": "^0.9.3",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "@fullcalendar/core": "^6.1.11",
+    "@fullcalendar/daygrid": "^6.1.11",
+    "@fullcalendar/interaction": "^6.1.11",
+    "@fullcalendar/react": "^6.1.11",
+    "@fullcalendar/timegrid": "^6.1.11"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",

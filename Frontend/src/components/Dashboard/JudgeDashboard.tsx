@@ -1,7 +1,7 @@
-
 import React from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar, FileText, Users, Gavel, ArrowUp, ArrowDown } from "lucide-react";
+import { CourtCalendar } from "./CourtCalendar";
 
 export function JudgeDashboard() {
   const stats = [
@@ -94,6 +94,17 @@ export function JudgeDashboard() {
           </Card>
         ))}
       </div>
+
+      {/* Court Calendar Section */}
+      <Card className="col-span-2">
+        <CardHeader>
+          <CardTitle>Court Calendar</CardTitle>
+          <CardDescription>Manage your court schedule and hearings</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <CourtCalendar />
+        </CardContent>
+      </Card>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Card className="col-span-1 hover-card">

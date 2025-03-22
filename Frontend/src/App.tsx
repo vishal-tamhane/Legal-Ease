@@ -17,6 +17,9 @@ import {JudgeDashboard} from "./components/Dashboard/JudgeDashboard";
 // import LawyerDashboard from "./components/LawyerDashboard";
 import {LitigantDashboard} from "./components/Dashboard/LitigantDashboard";
 import {AdminDashboard }from "./components/Dashboard/AdminDashboard";
+import Efilling from "./components/EfillingBlocks/Efilling";
+import { FloatingChatButton } from "@/components/FloatingChatButton";
+import MeetingBuilder from "./components/meeting/MeetingBuilder";
 
 const queryClient = new QueryClient();
 
@@ -40,6 +43,8 @@ const App = () => (
               <Route path="/dashboard/litigant:" element={<LitigantDashboard />} />
                <Route path="/dashboard/admin:" element={<AdminDashboard />} />
 
+              <Route path="/legal-ai" element={<ChatPage />} />
+              <Route path="/meeting" element={<MeetingBuilder />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

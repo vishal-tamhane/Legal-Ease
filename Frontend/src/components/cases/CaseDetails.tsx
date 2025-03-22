@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { 
   ChevronLeft, 
@@ -57,6 +58,7 @@ const cases = [
 export function CaseDetails() {
   const { id } = useParams<{ id: string }>();
   const caseData = cases.find((c) => c.id === id);
+  const navigate = useNavigate();
 
   if (!caseData) {
     return (
@@ -103,8 +105,8 @@ export function CaseDetails() {
           <Button variant="outline" className="flex items-center gap-2">
             <FileText className="h-4 w-4" /> Documents
           </Button>
-          <Button className="flex items-center gap-2">
-            <Video className="h-4 w-4" /> Join Hearing
+          <Button onClick={() => navigate('/meeting')}  className="flex items-center gap-2">
+            <Video className="h-4 w-4" /> Schedule a Court Hearing
           </Button>
         </div>
       </div>
