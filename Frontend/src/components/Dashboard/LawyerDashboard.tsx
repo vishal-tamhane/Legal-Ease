@@ -21,12 +21,7 @@ import {
 import { Button } from "../ui/button";
 import { redirect } from "react-router-dom";
 
-<<<<<<< HEAD
 function LawyerDashboard() {
-=======
-export function LawyerDashboard() {
-  const navigate = useNavigate();
->>>>>>> 527165373c219f6c99e8e574b939752729abfed5
   const stats = [
     {
       title: "Active Cases",

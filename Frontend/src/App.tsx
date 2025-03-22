@@ -12,15 +12,11 @@ import Cases from "./pages/Cases";
 import CaseView from "./pages/CaseView";
 import Auth from "./pages/Auth";
 import { ChatPage } from "./pages/ChatPage";
-import Efilling from "./components/EfillingBlocks/Efilling";
-import { FloatingChatButton } from "@/components/FloatingChatButton";
-import LawyerDashboard from "@/components/Dashboard/LawyerDashboard"; // ✅ Default export
-
-
+import LawyerDashboard from "@/components/Dashboard/LawyerDashboard"; // Updated path
 import {JudgeDashboard} from "./components/Dashboard/JudgeDashboard";
 // import LawyerDashboard from "./components/LawyerDashboard";
 import {LitigantDashboard} from "./components/Dashboard/LitigantDashboard";
-import {AdminDashboard} from "./components/Dashboard/AdminDashboard";
+import {AdminDashboard }from "./components/Dashboard/AdminDashboard";
 
 const queryClient = new QueryClient();
 
@@ -38,12 +34,15 @@ const App = () => (
               <Route path="/cases" element={<Cases />} />
               <Route path="/cases/:id" element={<CaseView />} />
               <Route path="/auth" element={<Auth />} />
-              <Route path="/filecase" element={<Efilling />} />
               <Route path="/chat" element={<ChatPage />} />
+              <Route path="/dashboard/lawyer:" element={<LawyerDashboard />} />
+              <Route path="/dashboard/judge:" element={<JudgeDashboard />} />
+              <Route path="/dashboard/litigant:" element={<LitigantDashboard />} />
+               <Route path="/dashboard/admin:" element={<AdminDashboard />} />
+
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
-            <FloatingChatButton />
           </BrowserRouter>
         </TooltipProvider>
       </AuthProvider>
