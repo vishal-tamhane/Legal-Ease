@@ -1,4 +1,3 @@
-
 import React from "react";
 import { FileText, Users, MessageSquare, Calendar, Search, Lock } from "lucide-react";
 
@@ -12,83 +11,67 @@ export function Features() {
     {
       icon: Users,
       title: "User Roles",
-      description: "Tailored interfaces for judges, lawyers, litigants, and administrators.",
+      description: "Tailored interfaces for different legal professionals.",
     },
     {
       icon: MessageSquare,
-      title: "Online Dispute Resolution",
-      description: "Resolve disputes efficiently through virtual mediation and AI-assisted tools.",
+      title: "Dispute Resolution",
+      description: "Virtual mediation with AI-assisted tools.",
     },
     {
       icon: Calendar,
       title: "Smart Scheduling",
-      description: "AI-optimized court schedules with automated reminders for all participants.",
+      description: "AI-optimized court schedules and reminders.",
     },
     {
       icon: Search,
       title: "Legal Research",
-      description: "NLP-powered analysis of case law, statutes, and precedents.",
+      description: "NLP-powered case law analysis.",
     },
     {
       icon: Lock,
-      title: "Secure Authentication",
-      description: "JWT-based authentication with robust role-based access control.",
+      title: "Secure Auth",
+      description: "JWT authentication with RBAC controls.",
     },
   ];
 
   return (
-    <section className="section bg-secondary/30 dark:bg-justice-900/30">
+    <section className="py-20 bg-gradient-to-b from-secondary/20 to-transparent">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto text-center mb-16">
-          <h2 className="heading-lg mb-4">
-            Comprehensive Features for Modern Justice
+          <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
+            Modern Legal Platform
           </h2>
-          <p className="text-muted-foreground text-lg">
-            Our platform offers a complete suite of tools designed to streamline the justice system
-            and improve access for all participants.
+          <p className="text-lg text-muted-foreground">
+            Streamlined tools for efficient justice system management
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative group">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature, index) => (
-            <div
+            <div 
               key={index}
-              className="perspective-1000 hover:perspective-[2000px] transition-all duration-500"
+              className="group perspective-1000 h-full"
             >
-              <div
-                className="glass-card rounded-xl p-6 transform-style-preserve-3d 
-        transition-all duration-300 hover:translate-z-10 hover:-translate-y-2
-        before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/10 
-        before:to-transparent before:rounded-xl before:backdrop-blur-2xl
-        after:absolute after:inset-0 after:bg-gradient-to-br 
-        after:from-transparent after:to-white/5 after:rounded-xl
-        shadow-[0_8px_32px_rgba(0,0,0,0.1)] 
-        hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25),inset_0_-2px_4px_rgba(255,255,255,0.1)]"
-                style={{
-                  transform: `
-            rotateX(calc(var(--mouse-y) * -1deg)) 
-            rotateY(calc(var(--mouse-x) * 1deg))
-          `,
-                  animationDelay: `${index * 0.1}s`
-                }}
+              <div className="relative h-full p-8 bg-background rounded-xl shadow-lg transition-all duration-300 transform-gpu 
+                group-hover:translate-z-10 group-hover:-translate-y-2 group-hover:shadow-xl
+                border border-border/20 hover:border-primary/30
+                before:absolute before:inset-0 before:rounded-xl before:opacity-0 before:transition-opacity
+                before:bg-gradient-to-br before:from-primary/10 before:to-transparent
+                group-hover:before:opacity-100"
               >
-                {/* Inner content with 3D layers */}
                 <div className="relative z-10">
-                  <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4 
-          transform translate-z-6">
-                    <feature.icon className="h-6 w-6 text-primary transform translate-z-8" />
+                  <div className="mb-6 p-4 w-fit rounded-xl bg-primary/10 transform-gpu 
+                    group-hover:translate-z-20 group-hover:scale-110 transition-transform">
+                    <feature.icon className="w-8 h-8 text-primary" />
                   </div>
-                  <h3 className="text-xl font-semibold mb-2 transform translate-z-12">
-                    {feature.title}
-                  </h3>
-                  <p className="text-muted-foreground transform translate-z-16">
-                    {feature.description}
-                  </p>
+                  <h3 className="text-xl font-semibold mb-4">{feature.title}</h3>
+                  <p className="text-muted-foreground">{feature.description}</p>
                 </div>
 
                 {/* 3D edge effect */}
-                <div className="absolute inset-0 border border-white/5 rounded-xl 
-        transform translate-z-[-4px] pointer-events-none" />
+                <div className="absolute inset-0 rounded-xl border border-white/5 
+                  group-hover:border-primary/10 transition-colors pointer-events-none" />
               </div>
             </div>
           ))}

@@ -6,9 +6,9 @@ import { AuthForm } from "@/components/auth/AuthForm";
 
 const Auth = () => {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen ">
       <Navbar />
-      <main className="flex-grow mt-24 flex items-center justify-center">
+      <main className="flex-grow mt-24 flex items-center py-12 justify-center">
         <div className="w-full max-w-md mx-auto px-4">
           <div className="text-center mb-8">
             <h1 className="heading-md mb-2">Welcome to LegalEase</h1>
