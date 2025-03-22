@@ -12,6 +12,13 @@ import Cases from "./pages/Cases";
 import CaseView from "./pages/CaseView";
 import Auth from "./pages/Auth";
 import { ChatPage } from "./pages/ChatPage";
+import LawyerDashboard from "@/components/Dashboard/LawyerDashboard"; // ✅ Default export
+
+
+import {JudgeDashboard} from "./components/Dashboard/JudgeDashboard";
+// import LawyerDashboard from "./components/LawyerDashboard";
+import {LitigantDashboard} from "./components/Dashboard/LitigantDashboard";
+import {AdminDashboard} from "./components/Dashboard/AdminDashboard";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +37,11 @@ const App = () => (
               <Route path="/cases/:id" element={<CaseView />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/chat" element={<ChatPage />} />
+              <Route path="/dashboard/lawyerDashboard" element={<LawyerDashboard />} />
+              <Route path="/dashboard/judgeDashboard" element={<JudgeDashboard />} />
+              <Route path="/dashboard/litigantDashboard" element={<LitigantDashboard />} />
+               <Route path="/dashboard/adminDashboard" element={<AdminDashboard />} />
+
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
@@ -39,6 +51,5 @@ const App = () => (
     </ThemeProvider>
   </QueryClientProvider>
 );
-
 
 export default App;

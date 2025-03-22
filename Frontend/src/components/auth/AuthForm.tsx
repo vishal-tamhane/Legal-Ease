@@ -42,7 +42,7 @@ export function AuthForm() {
       login({ id: user.uid, email, role });
 
       // Redirect to dashboard
-      navigate(`/dashboard/${role}`);
+      navigate(`/dashboard/${role}Dashboard`);
       toast.success("Account created successfully");
     } catch (error) {
       toast.error("Signup failed: " + error.message);
@@ -77,7 +77,7 @@ export function AuthForm() {
       login({ id: user.uid, email, role: userRole });
 
       // Redirect to correct dashboard
-      navigate(`/dashboard/${userRole}`);
+      navigate(`/dashboard/${userRole}Dashboard`);
       toast.success("Successfully logged in");
     } catch (error) {
       toast.error("Login failed: " + error.message);

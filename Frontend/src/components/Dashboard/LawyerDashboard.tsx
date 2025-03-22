@@ -1,9 +1,8 @@
-
 import React from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar, FileText, MessageSquare, Clock, ArrowUp, ArrowDown } from "lucide-react";
 
-export function LawyerDashboard() {
+function LawyerDashboard() {
   const stats = [
     {
       title: "Active Cases",
@@ -159,3 +158,5 @@ export function LawyerDashboard() {
     </div>
   );
 }
+
+export default LawyerDashboard;

@@ -2,7 +2,7 @@
 import React from "react";
 import { useAuth } from "@/context/AuthContext";
 import { JudgeDashboard } from "./JudgeDashboard";
-import { LawyerDashboard } from "./LawyerDashboard";
+import LawyerDashboard from "./LawyerDashboard";
 import { LitigantDashboard } from "./LitigantDashboard";
 import { AdminDashboard } from "./AdminDashboard";
 
