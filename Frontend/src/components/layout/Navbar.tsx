@@ -1,11 +1,11 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { Button } from "@/components/ui/button";
 import logo from "../assets/logo.png"
 import logo1 from "../assets/logolight.png"
-import { Menu, X, FileText, Calendar, User, Home, MessageCircle } from "lucide-react";
+import { Menu, X, FileText, Calendar, User, Home, MessageCircle, LogOut } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
 
 const links = [
   { name: "Home", href: "/", icon: Home },
@@ -18,6 +18,7 @@ export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const { user, logout } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -36,6 +37,11 @@ export function Navbar() {
   useEffect(() => {
     setIsMenuOpen(false);
   }, [location.pathname]);
+
+  const handleLogout = () => {
+    logout();
+    setIsMenuOpen(false);
+  };
 
   return (
     <header
@@ -76,13 +82,26 @@ export function Navbar() {
             <ThemeToggle />
           </div>
 
-          <Button asChild className="ml-2">
-            <Link to="/auth">Sign In</Link>
-          </Button>
+          {user ? (
+            <div className="flex items-center space-x-2">
+              <Button variant="ghost" className="flex items-center space-x-2">
+                <User className="h-4 w-4" />
+                <span>{user.fullName}</span>
+              </Button>
+              <Button variant="destructive" onClick={handleLogout} className="flex items-center space-x-2">
+                <LogOut className="h-4 w-4" />
+                <span>Logout</span>
+              </Button>
+            </div>
+          ) : (
+            <Button asChild className="ml-2">
+              <Link to="/auth">Sign In</Link>
+            </Button>
+          )}
         </nav>
 
         {/* Mobile Navigation Toggle */}
-        <div className="flex items-center md:hidden space-x-2">
+        <div className="flex items-center space-x-2 md:hidden">
           <ThemeToggle />
           <Button
             variant="ghost"
@@ -113,9 +132,26 @@ export function Navbar() {
                 <span>{link.name}</span>
               </Link>
             ))}
-            <Button asChild className="w-full mt-2">
-              <Link to="/auth">Sign In</Link>
-            </Button>
+            {user ? (
+              <>
+                <div className="px-4 py-3 flex items-center space-x-3 text-foreground/80">
+                  <User className="h-5 w-5" />
+                  <span>{user.fullName}</span>
+                </div>
+                <Button
+                  variant="destructive"
+                  onClick={handleLogout}
+                  className="w-full flex items-center justify-center space-x-2"
+                >
+                  <LogOut className="h-5 w-5" />
+                  <span>Logout</span>
+                </Button>
+              </>
+            ) : (
+              <Button asChild className="w-full">
+                <Link to="/auth">Sign In</Link>
+              </Button>
+            )}
           </div>
         </div>
       )}
