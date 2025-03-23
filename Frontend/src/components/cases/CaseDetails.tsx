@@ -74,14 +74,14 @@ export function CaseDetails() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "Active":
+      case "complete":
         return "bg-green-500/10 text-green-600 border-green-200";
-      case "Pending":
+      case "Incomplete":
         return "bg-yellow-500/10 text-yellow-600 border-yellow-200";
-      case "Closed":
-        return "bg-gray-500/10 text-gray-600 border-gray-200";
-      case "Archived":
-        return "bg-red-500/10 text-red-600 border-red-200";
+      // case "Closed":
+      //   return "bg-gray-500/10 text-gray-600 border-gray-200";
+      // case "Archived":
+      //   return "bg-red-500/10 text-red-600 border-red-200";
       default:
         return "bg-gray-500/10 text-gray-600 border-gray-200";
     }

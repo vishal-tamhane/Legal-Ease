@@ -12,12 +12,8 @@ import Cases from "./pages/Cases";
 import CaseView from "./pages/CaseView";
 import Auth from "./pages/Auth";
 import { ChatPage } from "./pages/ChatPage";
-import LawyerDashboard from "@/components/Dashboard/LawyerDashboard";
-import { JudgeDashboard } from "./components/Dashboard/JudgeDashboard";
-import { LitigantDashboard } from "./components/Dashboard/LitigantDashboard";
-import { AdminDashboard } from "./components/Dashboard/AdminDashboard";
 import MeetingBuilder from "./components/meeting/MeetingBuilder";
-import {LawyerDashboard} from "@/components/Dashboard/LawyerDashboard";
+import LawyerDashboard from "@/components/Dashboard/LawyerDashboard";
 import { JudgeDashboard } from "./components/Dashboard/JudgeDashboard";
 import { LitigantDashboard } from "./components/Dashboard/LitigantDashboard";
 import { AdminDashboard } from "./components/Dashboard/AdminDashboard";
@@ -42,7 +38,6 @@ const App = () => (
               <Route path="/dashboard/judge" element={<JudgeDashboard />} />
               <Route path="/dashboard/litigant" element={<LitigantDashboard />} />
               <Route path="/dashboard/admin" element={<AdminDashboard />} />
-
               <Route path="/cases" element={<Cases />} />
               <Route path="/cases/:id" element={<CaseView />} />
               <Route path="/chat" element={<ChatPage />} />
