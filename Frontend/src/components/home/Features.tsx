@@ -71,7 +71,7 @@ export function Features() {
 
       <div className="container mx-auto px-4 relative">
         <div className="max-w-3xl mx-auto text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
+        <h2 class="text-4xl font-bold mb-4 text-gray-800 dark:bg-gradient-to-r dark:from-primary dark:to-blue-600 dark:bg-clip-text dark:text-transparent">
             Modern Legal Platform
           </h2>
           <p className="text-lg text-muted-foreground">

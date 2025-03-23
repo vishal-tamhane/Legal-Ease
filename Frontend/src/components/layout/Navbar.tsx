@@ -7,11 +7,16 @@ import logo1 from "../assets/logolight.png"
 import { Menu, X, FileText, Calendar, User, Home, MessageCircle, LogOut } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 
-const links = [
+// Base links that are always shown
+const baseLinks = [
   { name: "Home", href: "/", icon: Home },
   { name: "Dashboard", href: "/dashboard", icon: FileText },
-  { name: "Cases", href: "/cases", icon: Calendar },
   { name: "LegalAI", href: "/chat", icon: MessageCircle },
+];
+
+// Role-specific links
+const judgeLinks = [
+  { name: "Cases", href: "/cases", icon: Calendar },
 ];
 
 export function Navbar() {
@@ -19,6 +24,14 @@ export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
   const { user, logout } = useAuth();
+
+  // Combine links based on user role
+  const links = React.useMemo(() => {
+    if (user?.role === 'judge') {
+      return [...baseLinks, ...judgeLinks];
+    }
+    return baseLinks;
+  }, [user?.role]);
 
   useEffect(() => {
     const handleScroll = () => {
