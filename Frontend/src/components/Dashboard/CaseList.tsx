@@ -120,11 +120,11 @@ export function CaseList() {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-        <div className="flex items-center gap-2 w-full md:w-auto">
+        {/* <div className="flex items-center gap-2 w-full md:w-auto">
           <Button size="sm" className="flex items-center gap-2">
             <FileText className="h-4 w-4" /> New Case
           </Button>
-        </div>
+        </div> */}
       </div>
 
       <div className="rounded-lg border overflow-hidden">

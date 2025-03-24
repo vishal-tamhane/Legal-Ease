@@ -3,7 +3,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Hero } from "@/components/home/Hero";
 import { Features } from "@/components/home/Features";
-import Efilling from "@/components/EfillingBlocks/Efilling";
+import { About } from "@/components/sections/About";
 
 const Index = () => {
   return (
@@ -12,6 +12,7 @@ const Index = () => {
       <main className="flex-grow mt-16">
         <Hero />
         <Features />
+        <About />
       </main>
       <Footer />
     </div>
